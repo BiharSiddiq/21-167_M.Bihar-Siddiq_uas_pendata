@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokumentasi Proyek Prediksi Heating Load</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dokumentasi Proyek: Prediksi Heating Load</h1>
+
+    <h2>1. Deskripsi Umum</h2>
+    <p>Proyek ini bertujuan untuk memprediksi <strong>Heating Load (Y1)</strong> berdasarkan 8 fitur dari dataset Energy Efficiency. Model Machine Learning yang digunakan adalah <code>GradientBoostingRegressor</code> dari Scikit-learn.</p>
+
+    <h2>2. Tahapan Analisis</h2>
+    <h3>2.1 Data Understanding</h3>
+    <p>Dataset memiliki 8 fitur (X1–X8):</p>
+    <ul>
+        <li>Relative Compactness</li>
+        <li>Surface Area</li>
+        <li>Wall Area</li>
+        <li>Roof Area</li>
+        <li>Overall Height</li>
+        <li>Orientation</li>
+        <li>Glazing Area</li>
+        <li>Glazing Area Distribution</li>
+    </ul>
+    <p>Target prediksi adalah <code>Y1 (Heating Load)</code>.</p>
+
+    <h3>2.2 Preprocessing</h3>
+    <p>Data diskalakan menggunakan <code>StandardScaler</code>. Tidak ada nilai kosong pada dataset.</p>
+
+    <h3>2.3 Modeling</h3>
+    <p>Model dievaluasi dengan <code>Mean Squared Error (MSE)</code> dan <code>R² Score</code>. Model terbaik dipilih dan disimpan dalam file <code>model_heating.pkl</code>.</p>
+
+    <h3>2.4 Deployment</h3>
+    <p>Model di-deploy menggunakan Flask API (<code>app.py</code>) dan form input dari HTML (<code>index.html</code>).</p>
+
+    <h2>3. Struktur File</h2>
+    <pre>
+energy_predictor/
+│
+├── index.html         ← Web form input prediksi
+├── app.py             ← Backend Flask API
+├── scaler.pkl         ← Scaler hasil preprocessing
+├── requirements.txt   ← Daftar dependensi
+    </pre>
+
+    <h2>4. Cara Menjalankan</h2>
+    <ol>
+        <li>Ekspor <code>model_heating.pkl</code> dan <code>scaler.pkl</code> dari Google Colab</li>
+        <li>Jalankan Flask API:
+            <pre><code>pip install -r requirements.txt
+python app.py</code></pre></li>
+        <li>Buka <code>index.html</code> di browser</li>
+        <li>Masukkan nilai X1–X8 dan klik <strong>Prediksi Sekarang</strong></li>
+    </ol>
+
+    <h2>5. Penutup</h2>
+    <p>Web ini memberikan antarmuka sederhana dan intuitif bagi pengguna untuk memprediksi Heating Load dari parameter desain bangunan secara otomatis. Cocok digunakan sebagai demo ML deployment atau tugas akhir.</p>
+</div>
+</body>
+</html>
