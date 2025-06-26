@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediksi Heating Load - Energy Efficiency</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f3f3f3; }
+        .container { background: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { text-align: center; }
+        label { font-weight: bold; }
+        input[type="number"] { width: 100%; padding: 10px; margin: 8px 0 20px; box-sizing: border-box; }
+        button { padding: 10px 20px; width: 100%; background-color: #28a745; border: none; color: white; font-size: 16px; border-radius: 5px; }
+        #result { margin-top: 20px; font-size: 18px; color: #007bff; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prediksi Heating Load (Y1)</h2>
+        <form id="predictionForm">
+            <label>Relative Compactness (X1)</label><input type="number" step="any" name="x1" required>
+            <label>Surface Area (X2)</label><input type="number" step="any" name="x2" required>
+            <label>Wall Area (X3)</label><input type="number" step="any" name="x3" required>
+            <label>Roof Area (X4)</label><input type="number" step="any" name="x4" required>
+            <label>Overall Height (X5)</label><input type="number" step="any" name="x5" required>
+            <label>Orientation (X6)</label><input type="number" step="any" name="x6" required>
+            <label>Glazing Area (X7)</label><input type="number" step="any" name="x7" required>
+            <label>Glazing Area Distribution (X8)</label><input type="number" step="any" name="x8" required>
+            <button type="submit">Prediksi</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const inputArray = [];
+            for (let pair of formData.entries()) {
+                inputArray.push(parseFloat(pair[1]));
+            }
+            fetch("http://localhost:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input: inputArray })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = "Prediksi Heating Load: " + data["Heating Load Prediction"].toFixed(2);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("result").innerText = "Terjadi kesalahan dalam prediksi.";
+            });
+        });
+    </script>
+</body>
+</html>
